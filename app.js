@@ -1,11 +1,16 @@
 const express = require("express");
-const app = express();
-const port = 3000;
 const textCoordintes = require("./text_coordinates.json");
 const Database = require("better-sqlite3");
 const path = require("node:path");
+var cors = require("cors");
 
+const app = express();
+const port = 3000;
 const db = new Database(path.join("tmp", "database.db"));
+
+// body-parser is now deprecated as of Express 4.16+
+app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -528,6 +533,90 @@ async function fetchAnnotations(objectId, token) {
 
   return annotations;
 }
+
+app.post("/api/annotationsByCanvas/:id", async (req, res) => {
+  const objectId = req.params.id;
+  // const token = req.headers.authorization?.replace("Bearer ", "");
+  const token = "123abc";
+  const { canvas, annotation } = req.body;
+
+  if (canvas === undefined) {
+    return res.send({ error: "no canvas" });
+  }
+  if (token === undefined) {
+    return res.send({ error: "no token" });
+  }
+
+  // fetch
+  if (req.query.action === "GET") {
+    async function fetchAnnotations(canvas, objectId, token) {
+      let annotations = [];
+
+      const stmt = db.prepare(
+        `SELECT annotation FROM annotations WHERE canvas = ? AND object_id = ? AND token = ?;`
+      );
+      const rows = stmt.all(canvas, objectId, token);
+      if (rows.length > 0) {
+        annotations = rows.map((row) => JSON.parse(row.annotation));
+      }
+
+      return annotations;
+    }
+
+    const annotations = await fetchAnnotations(canvas, objectId, token);
+
+    function formatAnnotationPage(annotations, url) {
+      return {
+        "@context": "http://iiif.io/api/presentation/3/context.json",
+        id: url,
+        type: "AnnotationPage",
+        items: annotations,
+      };
+    }
+
+    let base_url = req.protocol + "://" + req.get("host");
+    let url = `${base_url}${req.originalUrl}`;
+    return res.send(formatAnnotationPage(annotations, url));
+  } else if (req.body === undefined) {
+    return res.status(400).json({ error: "body is missing" });
+
+    // create
+  } else if (req.method === "POST") {
+    const stmt = db.prepare(
+      `INSERT INTO annotations (annotation, canvas, object_id, token, annotation_id)
+      VALUES (?, ?, ?, ?, ?)`
+    );
+    stmt.run(
+      JSON.stringify(annotation),
+      canvas,
+      objectId,
+      token,
+      annotation.id
+    );
+
+    return res.send({ message: "create annotation" });
+  }
+});
+
+app.delete("/api/annotationsByCanvas/:id", async (req, res) => {
+  const { annotation } = req.body;
+
+  const stmt = db.prepare("DELETE from annotations WHERE annotation_id = ?");
+  stmt.run(annotation.id);
+
+  res.send({ message: "annotation is deleted" });
+});
+
+app.put("/api/annotationsByCanvas/:id", async (req, res) => {
+  const { annotation } = req.body;
+
+  const stmt = db.prepare(
+    "UPDATE annotations set annotation = ? WHERE annotation_id = ?"
+  );
+  stmt.run(JSON.stringify(annotation), annotation.id);
+
+  res.send({ message: "annotation is updated" });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
