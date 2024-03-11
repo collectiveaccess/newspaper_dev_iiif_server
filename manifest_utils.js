@@ -20,7 +20,7 @@ function appendImage(annotation) {
         format: "image/jpeg",
       },
     ].concat(annotation.body);
-  } else {
+  } else if (annotation.body) {
     annotation.body = [
       {
         value:
@@ -29,6 +29,15 @@ function appendImage(annotation) {
         format: "image/jpeg",
       },
       annotation.body,
+    ];
+  } else {
+    annotation.body = [
+      {
+        value:
+          "https://iiif.io/api/image/3.0/example/reference/4ce82cef49fb16798f4c2440307c3d6f-newspaper-p1/full/150,/0/default.jpg",
+        type: "Image",
+        format: "image/jpeg",
+      },
     ];
   }
   return annotation;
