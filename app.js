@@ -58,8 +58,8 @@ app.get("/api/newspaper_search/:id", (req, res) => {
 
 app.get("/api/annotations/:id", async (req, res) => {
   const objectId = req.params.id;
-  // const token = req.headers.authorization?.replace("Bearer ", "");
-  const token = "123abc";
+  const token = req.headers.authorization?.replace("Bearer ", "");
+  // const token = "123abc";
 
   if (objectId == undefined || typeof objectId !== "string") {
     return res.send({ errror: "missing id" });
