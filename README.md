@@ -15,14 +15,14 @@ npm run dev
 
 ## endpoints
 
-`/api/newspaper/collection`
+### `/api/newspaper/collection`
 
 returns manifest for two issues of a
 newspaper
 
 **method:** GET
 
-`/api/newspaper/issue_1`
+### `/api/newspaper/issue_1`
 
 returns manifest for first issues of newspaper
 
@@ -142,13 +142,13 @@ returns manifest for first issues of newspaper
 
 ```
 
-`/api/newspaper/issue_2`
+### `/api/newspaper/issue_2`
 
 returns manifest for second issues of newspaper
 
 **method:** GET
 
-`/api/newspaper_search/<id>?q=<search term>`
+### `/api/newspaper_search/<id>?q=<search term>`
 
 returns content search manifest
 
@@ -221,7 +221,7 @@ returns content search manifest
 
 ```
 
-`/api/annotations/<id>`
+### `/api/annotations/<id>`
 
 returns clippings for one object
 
@@ -280,7 +280,7 @@ returns clippings for one object
 
 ```
 
-`/api/annotationsByCanvas/:id?action=GET`
+### `/api/annotationsByCanvas/:id?action=GET`
 
 returns clippings for one canvas.
 
@@ -353,7 +353,7 @@ I used POST instead of GET because canvas ID is sent in the request body
 }
 ```
 
-`/api/annotationsByCanvas/:id`
+### `/api/annotationsByCanvas/:id`
 
 creates a clipping
 
@@ -406,7 +406,7 @@ creates a clipping
 
 ```
 
-`/api/annotationsByCanvas/:id`
+### `/api/annotationsByCanvas/:id`
 
 deletes a clipping
 
@@ -424,7 +424,7 @@ deletes a clipping
 
 - `annotation` is an annotation in IIIF format
 
-`/api/annotationsByCanvas/:id`
+### `/api/annotationsByCanvas/:id`
 
 updates a clipping
 
