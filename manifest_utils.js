@@ -150,10 +150,10 @@ function makeIssue1Manifest(base_url, url) {
           //     },
           //   ],
           // },
-          {
-            id: `${base_url}/api/annotations/1`,
-            type: "AnnotationPage",
-          },
+          // {
+          //   id: `${base_url}/api/annotations/1`,
+          //   type: "AnnotationPage",
+          // },
         ],
       },
       {
@@ -191,10 +191,10 @@ function makeIssue1Manifest(base_url, url) {
           },
         ],
         annotations: [
-          {
-            id: `${base_url}/api/annotations/1`,
-            type: "AnnotationPage",
-          },
+          // {
+          //   id: `${base_url}/api/annotations/1`,
+          //   type: "AnnotationPage",
+          // },
         ],
       },
     ],
@@ -332,10 +332,10 @@ function makeIssue2Manifest(base_url, url) {
               },
             ],
           },
-          {
-            id: `${base_url}/api/annotations/2`,
-            type: "AnnotationPage",
-          },
+          // {
+          //   id: `${base_url}/api/annotations/2`,
+          //   type: "AnnotationPage",
+          // },
         ],
       },
       {
@@ -412,10 +412,10 @@ function makeIssue2Manifest(base_url, url) {
               en: ["Search results"],
             },
           },
-          {
-            id: `${base_url}/api/annotations/2`,
-            type: "AnnotationPage",
-          },
+          // {
+          //   id: `${base_url}/api/annotations/2`,
+          //   type: "AnnotationPage",
+          // },
         ],
       },
     ],
