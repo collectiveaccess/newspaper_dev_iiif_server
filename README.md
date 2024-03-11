@@ -7,6 +7,12 @@ npm install
 
 ```
 
+create sqlite database to store the clippings
+
+```
+node createDB.js
+```
+
 ## start server
 
 ```
