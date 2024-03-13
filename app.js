@@ -13,6 +13,7 @@ const db = new Database(path.join("tmp", "database.db"));
 // body-parser is now deprecated as of Express 4.16+
 app.use(express.json());
 app.use(cors());
+app.use(express.static("public"));
 
 function format_url(req) {
   let base_url = req.protocol + "://" + req.get("host");
@@ -131,6 +132,11 @@ app.put("/api/annotationsByCanvas/:id", async (req, res) => {
   await db_utils.updateAnnotation(db, annotation);
 
   res.send({ message: "annotation is updated" });
+});
+
+app.get("/api/pdf", (req, res) => {
+  const { base_url, url } = format_url(req);
+  res.send(manifest_utils.makePdfManifest(base_url, url));
 });
 
 app.listen(port, () => {

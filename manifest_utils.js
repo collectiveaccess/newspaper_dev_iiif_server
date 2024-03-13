@@ -1,4 +1,5 @@
-const textCoordintes = require("./text_coordinates.json");
+const textCoordintes = require("./data/text_coordinates.json");
+const pdf = require("./data/pdf.json");
 
 function formatAnnotationPage(annotations, url) {
   return {
@@ -461,6 +462,10 @@ function makeContentSearchManifest(id, searchTerm, base_url, url) {
   return manifest;
 }
 
+function makePdfManifest(base_url, url) {
+  return pdf;
+}
+
 module.exports = {
   formatAnnotationPage,
   appendImage,
@@ -468,4 +473,5 @@ module.exports = {
   makeIssue1Manifest,
   makeIssue2Manifest,
   makeContentSearchManifest,
+  makePdfManifest,
 };
