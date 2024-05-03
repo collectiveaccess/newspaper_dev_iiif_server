@@ -30,7 +30,7 @@ app.get("/api/fixtures/newspaper/issue_1", (req, res) => {
   res.send(manifest_utils.makeIssue1Manifest(base_url, url));
 });
 
-app.get("/api/newspaper_search/:id", (req, res) => {
+app.get("/api/fixtures/content-search/:id", (req, res) => {
   const id = req.params.id;
   if (id == undefined || typeof id !== "string") {
     return res.send({ errror: "missing id" });

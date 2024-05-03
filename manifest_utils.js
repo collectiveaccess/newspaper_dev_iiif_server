@@ -182,7 +182,7 @@ function makeContentSearchManifest(id, searchTerm, base_url, url) {
         const [stringId, x, y, w, h] = match;
         if (manifest.items) {
           manifest.items.push({
-            id: `${base_url}/api/newspaper/annotation/${stringId}`,
+            id: `${base_url}/api/fixtures/newspaper/annotation/${stringId}`,
             type: "Annotation",
             motivation: "highlighting",
             body: {
@@ -193,7 +193,7 @@ function makeContentSearchManifest(id, searchTerm, base_url, url) {
             label: {
               none: [`p. ${page.page}`],
             },
-            target: `${base_url}/api/newpaper/canvas/i${id}p${page.page}#xywh=${x},${y},${w},${h}`,
+            target: `${base_url}/api/fixtures/newpaper/canvas/i${id}p${page.page}#xywh=${x},${y},${w},${h}`,
           });
         }
       });
