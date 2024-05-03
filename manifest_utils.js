@@ -44,6 +44,18 @@ function appendImage(annotation) {
   return annotation;
 }
 
+function normalizeBody(annotation) {
+  if (!annotation.body) {
+    annotation.body = [
+      {
+        value: "Clipping",
+        type: "TextualBody",
+        format: "text/plain",
+      },
+    ];
+  }
+  return annotation;
+}
 
 function makeIssue1Manifest(base_url, url) {
   return {
@@ -212,4 +224,5 @@ module.exports = {
   makeIssue1Manifest,
   makeContentSearchManifest,
   makePdfManifest,
+  normalizeBody,
 };

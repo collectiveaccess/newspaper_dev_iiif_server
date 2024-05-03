@@ -64,7 +64,7 @@ app.get("/api/annotations/:id", async (req, res) => {
     objectId,
     token
   );
-  annotations = annotations.map(manifest_utils.appendImage);
+  annotations = annotations.map(manifest_utils.normalizeBody);
 
   let base_url = req.protocol + "://" + req.get("host");
   let url = `${base_url}${req.originalUrl}`;
@@ -72,43 +72,24 @@ app.get("/api/annotations/:id", async (req, res) => {
   res.send(manifest_utils.formatAnnotationPage(annotations, url));
 });
 
-app.post("/api/annotationsByCanvas/:id", async (req, res) => {
+app.post("/api/annotations/:id", async (req, res) => {
   const objectId = req.params.id;
   const token = req.headers.authorization?.replace("Bearer ", "");
   // const token = "123abc";
-  const { canvas, annotation } = req.body;
+  const { annotation } = req.body;
 
-  if (canvas === undefined) {
-    return res.send({ error: "no canvas" });
-  }
   if (token === undefined) {
     return res.send({ error: "no token" });
   }
 
-  // fetch
-  if (req.query.action === "GET") {
-    const annotations = await db_utils.fetchAnnotationsByObjectCanvas(
-      db,
-      canvas,
-      objectId,
-      token
-    );
+  const canvas = annotation.target.source.id;
 
-    let base_url = req.protocol + "://" + req.get("host");
-    let url = `${base_url}${req.originalUrl}`;
-    return res.send(manifest_utils.formatAnnotationPage(annotations, url));
+  await db_utils.createAnnotation(db, annotation, canvas, objectId, token);
 
-    // create
-  } else if (req.method === "POST") {
-    await db_utils.createAnnotation(db, annotation, canvas, objectId, token);
-
-    return res.send({ message: "create annotation" });
-  } else {
-    return res.send({ message: "invalid request" });
-  }
+  return res.send({ message: "create annotation" });
 });
 
-app.delete("/api/annotationsByCanvas/:id", async (req, res) => {
+app.delete("/api/annotations/:id", async (req, res) => {
   const { annotation } = req.body;
 
   await db_utils.deleteAnnotation(db, annotation);
@@ -116,7 +97,7 @@ app.delete("/api/annotationsByCanvas/:id", async (req, res) => {
   res.send({ message: "annotation is deleted" });
 });
 
-app.put("/api/annotationsByCanvas/:id", async (req, res) => {
+app.put("/api/annotations/:id", async (req, res) => {
   const { annotation } = req.body;
 
   await db_utils.updateAnnotation(db, annotation);
