@@ -109,26 +109,6 @@ function makeIssue1Manifest(base_url, url) {
             ],
           },
         ],
-        annotations: [
-          {
-            id: `${base_url}/api/fixtures/newpaper/annotations/AnnotationPage/i1p1ap1`,
-            type: "AnnotationPage",
-            items: [
-              {
-                id: `${base_url}/api/fixtures/newpaper/annotations/Annotation/i1p1ap1a1`,
-                type: "Annotation",
-                motivation: "commenting",
-                body: {
-                  type: "TextualBody",
-                  format: "text/plain",
-                  language: "en",
-                  value: "This is issue 1, page 1",
-                },
-                target: `${base_url}/api/fixtures/newpaper/canvas/i1p1#xywh=1300,400,200,400`,
-              },
-            ],
-          },
-        ],
       },
       {
         id: `${base_url}/api/fixtures/newpaper/canvas/i1p2`,
