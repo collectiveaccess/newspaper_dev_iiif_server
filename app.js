@@ -25,19 +25,9 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/api/newspaper/collection", (req, res) => {
-  const { base_url, url } = format_url(req);
-  res.send(manifest_utils.makeCollectionsManifest(base_url, url));
-});
-
-app.get("/api/newspaper/issue_1", (req, res) => {
+app.get("/api/fixtures/newspaper/issue_1", (req, res) => {
   const { base_url, url } = format_url(req);
   res.send(manifest_utils.makeIssue1Manifest(base_url, url));
-});
-
-app.get("/api/newspaper/issue_2", (req, res) => {
-  const { base_url, url } = format_url(req);
-  res.send(manifest_utils.makeIssue2Manifest(base_url, url));
 });
 
 app.get("/api/newspaper_search/:id", (req, res) => {
